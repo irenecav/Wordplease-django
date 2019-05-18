@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wordsplase</title>
+</head>
+<body>
+<h1>Wordplease
+    {% for post in latest_posts %}
+    <article>
+        <a href="{% url 'post_detail' post.pk %}">
+        <header>
+            <h5>
+            {{ post.title }}
+            </h5>
+        </header>
+        <main>
+            <img src="{{ post.url }}" alt="{{ post.title }}" height="100">
+            <p>{{ post.description }}</p>
+
+        </main>
+            </a>
+    </article>
+    {% endfor %}
+
+
+</body>
+</html>
