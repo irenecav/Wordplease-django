@@ -1,8 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as django_login, logout as django_logout
 from django.views import View
+from django.views.generic import ListView
 
 from users.forms import LoginForm
 
@@ -59,3 +61,17 @@ class LogoutView(View):
     def get(self, request):
         django_logout(request)
         return redirect('login')
+
+
+
+
+
+class BlogListView(ListView):
+
+    model = User
+
+    template_name = 'users/blogs.html'
+
+
+
+
