@@ -1,6 +1,8 @@
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 
+from posts.forms import PostForm
 from posts.models import Post
 
 
@@ -36,5 +38,19 @@ def post_detail(request, pk):
     return HttpResponse(html)
 
 
+def new_post(request):
+
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            new_post = form.save()
+            messages.success(request, 'Post successfully created')
+            form = PostForm()
+
+    else:
+        form = PostForm()
+
+    context = {'form': form}
+    return render(request, 'posts/new.html', context)
 
 
