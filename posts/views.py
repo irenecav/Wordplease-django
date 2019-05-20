@@ -1,6 +1,7 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from posts.forms import PostForm
 from posts.models import Post
@@ -37,11 +38,13 @@ def post_detail(request, pk):
     #devolver respuesta HTTP
     return HttpResponse(html)
 
-
+@login_required
 def new_post(request):
 
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        post = Post()
+        post.owner = request.user
+        form = PostForm(request.POST, instance=post)
         if form.is_valid():
             new_post = form.save()
             messages.success(request, 'Post successfully created')
