@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block head_title %} {{ photo.name }} {% endblock %}
+
+{% block main_title %} {{ photo.name }} {% endblock %}
+
+{% block main_content %}
 {% for message in messages %}
 <p style="color: darkred">{{ message }}</p>
 {% endfor %}
@@ -12,13 +12,9 @@
 <form method="post">
     {% csrf_token %}
 
-    <input type="text" name="usr" placeholder="Username" required>
-
-    <input type="password" name="pwd" placeholder="Password" required>
+    {{ form.as_p}}
 
     <button type="submit">Login</button>
 
 </form>
-
-</body>
-</html>
+{% endblock %}

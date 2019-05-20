@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Wordsplase</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block main_title %} Frikr {% endblock %}
+
+{% block main_content %}
 <h1>Wordplease
     {% for post in latest_posts %}
     <article>
@@ -24,5 +22,4 @@
     {% endfor %}
 
 
-</body>
-</html>
+{% endblock %}
