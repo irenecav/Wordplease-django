@@ -2,17 +2,33 @@ from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as django_login, logout as django_logout
+from django.views import View
 
 from users.forms import LoginForm
 
 
-def login(request):
-    if request.user.is_authenticated:
-        return redirect('home')
+
+class LoginView(View):
+
+    def get(self, request):
+
+        if request.user.is_authenticated:
+            return redirect('home')
+
+        else:
+            form = LoginForm()
+
+        context = {'form': form}
+
+        return render(request, 'users/login.html', context)
 
 
 
-    if request.method == 'POST':
+    def post(self, request):
+
+        if request.user.is_authenticated:
+            return redirect('home')
+
         form = LoginForm(request.POST)
 
         if form.is_valid():
@@ -26,17 +42,20 @@ def login(request):
 
             else:
                 django_login(request, user)
-                return redirect('home')
+                url = request.GET.get('next', 'home')
+                return redirect(url)
+
+        context = {'form': form}
+
+        return render(request, 'users/login.html', context)
 
 
-    else:
-        form = LoginForm()
-
-    context = {'form': form}
-
-    return render(request, 'users/login.html', context)
 
 
-def logout(request):
-    django_logout(request)
-    return redirect('login')
+
+
+class LogoutView(View):
+
+    def get(self, request):
+        django_logout(request)
+        return redirect('login')

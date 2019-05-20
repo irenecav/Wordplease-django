@@ -1,47 +1,63 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+from django.views import View
 
 from posts.forms import PostForm
 from posts.models import Post
 
 
-def latest_posts(request):
-    #Recuperar los ultimos post de la base de datos
-    posts = Post.objects.all().order_by('-modification_date')
+class LatestPostsView(View):
 
-    #Creamos el contexto
-    context = {'latest_posts': posts[:6]}
+    def get(self, request):
+        # Recuperar los ultimos post de la base de datos
+        posts = Post.objects.all().order_by('-modification_date')
 
-    #Crear repuesta HTML con los posts
-    html = render(request, 'posts/lastest.html', context)
+        # Creamos el contexto
+        context = {'latest_posts': posts[:6]}
 
-    #Devolver la respueste HTTP
-    return  HttpResponse(html)
+        # Crear repuesta HTML con los posts
+        html = render(request, 'posts/lastest.html', context)
+
+        # Devolver la respueste HTTP
+        return HttpResponse(html)
 
 
-def post_detail(request, pk):
-    try:
 
-        post = Post.objects.get(pk=pk)
 
-    except Post.DoesNotExist:
-        return HttpResponseNotFound()
 
-    #Crear un contexto para pasar la informacion a plantilla
-    context = {'post': post}
+class PostDetailView(View):
+    def get(self, request, pk):
+        try:
 
-    #Renderiza plantilla
-    html = render(request,'posts/detail.html', context)
+            post = Post.objects.get(pk=pk)
 
-    #devolver respuesta HTTP
-    return HttpResponse(html)
+        except Post.DoesNotExist:
+            return HttpResponseNotFound()
 
-@login_required
-def new_post(request):
+            # Crear un contexto para pasar la informacion a plantilla
+        context = {'post': post}
 
-    if request.method == 'POST':
+        # Renderiza plantilla
+        html = render(request, 'posts/detail.html', context)
+
+        # devolver respuesta HTTP
+        return HttpResponse(html)
+
+
+
+class NewPostView(LoginRequiredMixin, View):
+    def get(self, request):
+
+        form = PostForm()
+
+        context = {'form': form}
+        return render(request, 'posts/new.html', context)
+
+
+    def post(self, request):
+
         post = Post()
         post.owner = request.user
         form = PostForm(request.POST, instance=post)
@@ -50,10 +66,14 @@ def new_post(request):
             messages.success(request, 'Post successfully created')
             form = PostForm()
 
-    else:
-        form = PostForm()
+        context = {'form': form}
+        return render(request, 'posts/new.html', context)
 
-    context = {'form': form}
-    return render(request, 'posts/new.html', context)
+
+
+
+
+
+
 
 

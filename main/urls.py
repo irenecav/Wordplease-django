@@ -16,18 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from posts.views import latest_posts, post_detail, new_post
-from users.views import login, logout
+from posts.views import NewPostView, PostDetailView, LatestPostsView
+from users.views import LogoutView, LoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Users
-    path('login', login, name='login'),
-    path('logout', logout, name='logout'),
+    path('login', LoginView.as_view(), name='login'),
+    path('logout', LogoutView.as_view(), name='logout'),
     # Posts
-    path('posts/new/', new_post, name='new_post'),
-    path('posts/<int:pk>/', post_detail, name='post_detail'),
-    path('', latest_posts, name='home')
+    path('posts/new/', NewPostView.as_view(), name='new_post'),
+    path('posts/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
+    path('', LatestPostsView.as_view(), name='home')
 
 
 
