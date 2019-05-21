@@ -15,7 +15,10 @@
     </p>
 </header>
 <main>
+    {% if post.url %}
     <img src="{{ post.url}}" alt="{{ post.title }}" height="300">
+    {% endif %}
+
     <p>
         {{ post.text }}
     </p>

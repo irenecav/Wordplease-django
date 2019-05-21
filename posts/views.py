@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import View
@@ -25,9 +26,6 @@ class LatestPostsView(View):
         return HttpResponse(html)
 
 
-
-
-
 class PostDetailView(View):
     def get(self, request, pk):
         post = get_object_or_404(Post.objects.select_related('owner'), pk=pk)
@@ -42,18 +40,14 @@ class PostDetailView(View):
         return HttpResponse(html)
 
 
-
 class NewPostView(LoginRequiredMixin, View):
     def get(self, request):
-
         form = PostForm()
 
         context = {'form': form}
         return render(request, 'posts/new.html', context)
 
-
     def post(self, request):
-
         post = Post()
         post.owner = request.user
         form = PostForm(request.POST, instance=post)
@@ -66,25 +60,10 @@ class NewPostView(LoginRequiredMixin, View):
         return render(request, 'posts/new.html', context)
 
 
-
-
-
-
-
-
-
-class PostsListView(ListView):
-
-    template_name = 'posts/list.html'
+class BlogDetailView(ListView):
+    template_name = 'posts/blogdetail.html'
 
     def get_queryset(self):
-        queryset = Post.objects.select_related('owner').order_by('-modification_date')
+        queryset = Post.objects.select_related('owner').filter(owner=pk)
+
         return queryset
-
-
-
-
-
-
-
-
