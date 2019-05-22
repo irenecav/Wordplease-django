@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as django_login, logout as django_logout
 from django.views import View
 from django.views.generic import ListView
@@ -60,6 +61,22 @@ class BlogListView(ListView):
     model = User
 
     template_name = 'users/blogs.html'
+
+
+class BlogView(View):
+    def get(self, request, username):
+        owner = get_object_or_404(User, username=username)
+        blog_posts = owner.posts.order_by(
+            '-modification_date')
+
+        context = {'owner': owner,
+                   'blog_posts': blog_posts}
+
+        html = render(request, 'users/blog_posts.html', context)
+
+        # Return HTP response
+        return HttpResponse(html)
+
 
 
 class SignUpView(View):

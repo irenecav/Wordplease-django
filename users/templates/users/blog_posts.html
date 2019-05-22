@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block head_title %} {{ post.title }} {% endblock %}
+
+{% block main_title %} {{ post.title }} {% endblock %}
+
+{% block main_content %}
+<section>
+<header>
+    <h2>
+       Blog de {{owner.username}}
+    </h2>
+    <p>
+      Author: {{owner.first_name}} {{owner.last_name}}
+    </p>
+</header>
+<main>
+      {% for post in blog_posts %}
+    <article>
+        <a href="{% url 'post_detail' post.pk %}">
+        <header>
+            <h5>
+            {{ post.title }}
+            </h5>
+        </header>
+        <main>
+            {% if post.url %}
+            <img src="{{ post.url}}" alt="{{ post.title }}" height="300">
+            {% endif %}
+            <p>{{ post.description }}</p>
+
+        </main>
+            </a>
+    </article>
+    {% endfor %}
+
+</main>
+<footer>
+    <p>{{ post.owner.username }}</p>
+    <p>{{ post.modification_date|date:"d M Y" }} - {{ post.modification_date|time:"H:i" }}</p>
+</footer>
+</section>
+{% endblock %}

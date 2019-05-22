@@ -5,7 +5,7 @@
 {% block main_content %}
     {% for user in object_list %}
     <article>
-        <a href="{% url 'blog_posts' user.pk %}">
+        <a href="{% url 'user_blog' user.username %}">
 
             <h5>
             {{ user }}

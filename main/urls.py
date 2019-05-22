@@ -16,12 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from posts.views import NewPostView, PostDetailView, LatestPostsView, BlogDetailView
+from posts.views import NewPostView, PostDetailView, LatestPostsView
 from users.api import UsersAPI, UserDetailAPI
-from users.views import LogoutView, LoginView, BlogListView, SignUpView
-
-
-
+from users.views import LogoutView, LoginView, BlogListView, SignUpView, BlogView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,7 +30,8 @@ urlpatterns = [
 
     # Blogs
     path('blogs/', BlogListView.as_view(), name='blogs'),
-    path('blogs/<int:pk>/', BlogDetailView.as_view(), name='blog_posts'),
+    path('blogs/<str:username>/', BlogView.as_view(), name='user_blog'),
+    path('blogs/<str:username>/<int:pk>', PostDetailView.as_view(), name='user_post'),
 
 
     # Posts
