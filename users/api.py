@@ -1,24 +1,23 @@
-import json
-
 from django.contrib.auth.models import User
-from django.http import HttpResponse
-from django.views import View
+from rest_framework.generics import get_object_or_404
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-import users
+from users.serializers import UserSerializer
 
 
-class UsersAPI(View):
+class UsersAPI(APIView):
 
     def get(self, request):
         users = User.objects.all()
-        user_list = []
-        for user in users:
-            user_list.append({
-                'id': user.id,
-                'username': user.username,
-                'first_name': user.first_name,
-                'last_name': user.last_name
-            })
+        serializer = UserSerializer(users, many=True)
 
-        users_json = json.dumps(user_list)
-        return  HttpResponse(users_json, content_type='application/json')
+        return Response(serializer.data)
+
+
+class UserDetailAPI(APIView):
+
+    def get(self, request, pk):
+        user = get_object_or_404(User, pk=pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
