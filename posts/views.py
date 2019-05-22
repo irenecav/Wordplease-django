@@ -7,7 +7,7 @@ from django.views import View
 from django.views.generic import ListView
 
 from posts.forms import PostForm
-from posts.models import Post
+from posts.models import Post, Category
 
 
 class LatestPostsView(View):
@@ -28,7 +28,7 @@ class LatestPostsView(View):
 
 class PostDetailView(View):
     def get(self, request, pk):
-        post = get_object_or_404(Post.objects.select_related('owner'), pk=pk)
+        post = get_object_or_404(Post.objects.select_related('owner'), pk=pk )
 
         # Crear un contexto para pasar la informacion a plantilla
         context = {'post': post}

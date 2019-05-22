@@ -17,7 +17,11 @@ from django.contrib import admin
 from django.urls import path
 
 from posts.views import NewPostView, PostDetailView, LatestPostsView, BlogDetailView
+from users.api import UsersAPI
 from users.views import LogoutView, LoginView, BlogListView, SignUpView
+
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,7 +39,11 @@ urlpatterns = [
     # Posts
     path('posts/new/', NewPostView.as_view(), name='new_post'),
     path('posts/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
-    path('', LatestPostsView.as_view(), name='home')
+    path('', LatestPostsView.as_view(), name='home'),
+
+
+    # API
+    path('api/users/', UsersAPI.as_view(), name='users_api')
 
 
 

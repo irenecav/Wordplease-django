@@ -22,6 +22,11 @@
     <p>
         {{ post.text }}
     </p>
+
+    {% for category in post.categories.all %}
+    <p>{{ category.name }}</p>
+    {% endfor %}
+
 </main>
 <footer>
     <p>{{ post.owner.username }}</p>
