@@ -31,7 +31,6 @@ urlpatterns = [
     # Blogs
     path('blogs/', BlogListView.as_view(), name='blogs'),
     path('blogs/<str:username>/', BlogView.as_view(), name='user_blog'),
-    path('blogs/<str:username>/<int:pk>', PostDetailView.as_view(), name='user_post'),
 
 
     # Posts

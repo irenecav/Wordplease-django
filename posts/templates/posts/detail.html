@@ -1,36 +1,37 @@
 {% extends 'base.html' %}
 
-{% block head_title %} {{ post.title }} {% endblock %}
-
-{% block main_title %} {{ post.title }} {% endblock %}
-
 {% block main_content %}
 <section>
 <header>
     <h2>
        {{ post.title }}
     </h2>
-    <p>
-        {{ post.description }}
-    </p>
-</header>
-<main>
     {% if post.url %}
-    <img src="{{ post.url}}" alt="{{ post.title }}" height="300">
+    <figure>
+    <img src="{{ post.url}}" alt="{{ post.title }}">
+    </figure>
     {% endif %}
 
-    <p>
+</header>
+<main>
+
+
+    <p class="intropostdetail">
+        {{ post.description }}
+    </p>
+
+    <p class="textopost">
         {{ post.text }}
     </p>
 
     {% for category in post.categories.all %}
-    <p>{{ category.name }}</p>
+    <span>{{ category.name }}</span>
     {% endfor %}
 
-</main>
-<footer>
-    <p>{{ post.owner.username }}</p>
+    <p class="authorpost">Author: {{ post.owner.username }}</p>
     <p>{{ post.modification_date|date:"d M Y" }} - {{ post.modification_date|time:"H:i" }}</p>
-</footer>
+
+</main>
+
 </section>
 {% endblock %}

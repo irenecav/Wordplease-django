@@ -1,25 +1,24 @@
 {% extends 'base.html' %}
 
-{% block main_title %} Frikr {% endblock %}
-
 {% block main_content %}
-<h1>Wordplease
+
     {% for post in latest_posts %}
     <article>
-        <a href="{% url 'post_detail' post.pk %}">
-        <header>
-            <h5>
-            {{ post.title }}
-            </h5>
-        </header>
-        <main>
-            {% if post.url %}
+        <div class="imagenpost">
+             {% if post.url %}
             <img src="{{ post.url}}" alt="{{ post.title }}" height="300">
             {% endif %}
-            <p>{{ post.description }}</p>
+        </div>
+        <div class="infopost">
+                    <a href="{% url 'post_detail' post.pk %}">
 
-        </main>
-            </a>
+             <h5>
+            {{ post.title }}
+            </h5>
+            <p>{{ post.description }}</p>
+ </a>
+        </div>
+
     </article>
     {% endfor %}
 

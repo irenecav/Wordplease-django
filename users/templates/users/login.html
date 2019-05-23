@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 
-{% block head_title %} {{ photo.name }} {% endblock %}
 
-{% block main_title %} {{ photo.name }} {% endblock %}
+{% block main_title %} Login {% endblock %}
 
 {% block main_content %}
 {% for message in messages %}
 <p style="color: darkred">{{ message }}</p>
 {% endfor %}
 
-<form method="post">
+<form class="login" method="post">
     {% csrf_token %}
 
     {{ form.as_p}}

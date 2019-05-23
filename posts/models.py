@@ -14,8 +14,8 @@ class Category(models.Model):
 
 class Post(models.Model):
 
-    title = models.CharField(max_length=150)
-    description = models.CharField(max_length=300)
+    title = models.CharField(max_length=80)
+    description = models.CharField(max_length=190)
     text = models.TextField()
     url = models.URLField()
     creation_date = models.DateTimeField(auto_now_add=True)

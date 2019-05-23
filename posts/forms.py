@@ -8,6 +8,8 @@ class PostForm(ModelForm):
     url = forms.CharField(required=False)
 
 
+
+
     class Meta:
         model = Post
 
