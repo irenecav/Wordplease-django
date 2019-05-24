@@ -19,7 +19,7 @@
             {% endif %}
         </div>
         <div class="infopost">
-                    <a href="{% url 'post_detail' post.pk %}">
+                    <a href="{% url 'post_detail' post.owner.username post.pk %}">
 
              <h5>
             {{ post.title }}

@@ -16,13 +16,11 @@ class PostsAPI(PostList, ListCreateAPIView):
     search_fields = ['title', 'description', 'url', 'owner__first_name', 'owner__last_name', 'text']
     ordering_fields = ['id', 'publication_date', 'modification_date', 'title']
 
-
     queryset = Post.objects.all()
 
     def get_serializer_class(self):
 
         return PostListSerializer if self.request.method == 'GET' else PostSerializer
-
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

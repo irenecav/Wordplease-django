@@ -17,11 +17,6 @@ class Category(models.Model):
 
 class Post(models.Model):
 
-
-
-
-
-
     title = models.CharField(max_length=80)
     description = models.CharField(max_length=190)
     text = models.TextField()
@@ -32,16 +27,6 @@ class Post(models.Model):
     owner = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
     categories = models.ManyToManyField(Category)
 
-
-
-
-
-
     def __str__(self):
         return self.title
-
-
-
-
-
 

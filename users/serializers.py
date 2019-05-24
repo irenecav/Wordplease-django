@@ -3,12 +3,20 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 
+
+class BlogListSerializer(serializers.Serializer):
+    username = serializers.CharField()
+
+
+
+
 class UserListSerializer(serializers.Serializer):
 
     id = serializers.ReadOnlyField()
     username = serializers.CharField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
+
 
 
 

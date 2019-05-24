@@ -3,6 +3,7 @@ import datetime
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import View
@@ -29,7 +30,7 @@ class LatestPostsView(View):
 
 
 class PostDetailView(View):
-    def get(self, request, pk):
+    def get(self, request, username, pk):
         post = get_object_or_404(Post.objects.select_related('owner'), pk=pk )
 
         # Crear un contexto para pasar la informacion a plantilla
