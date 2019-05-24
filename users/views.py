@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -63,11 +65,12 @@ class BlogListView(ListView):
     template_name = 'users/blogs.html'
 
 
+
 class BlogView(View):
     def get(self, request, username):
         owner = get_object_or_404(User, username=username)
         blog_posts = owner.posts.order_by(
-            '-modification_date')
+            '-publication_date').filter(publication_date__lte=datetime.datetime.now())
 
         context = {'owner': owner,
                    'blog_posts': blog_posts}

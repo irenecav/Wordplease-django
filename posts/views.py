@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -14,8 +16,8 @@ class LatestPostsView(View):
 
     def get(self, request):
         # Recuperar los ultimos post de la base de datos
-        posts = Post.objects.all().order_by('-modification_date').select_related('owner')
-
+        posts = Post.objects.filter(publication_date__lte=datetime.datetime.now()).order_by(
+            '-publication_date').select_related('owner')
         # Creamos el contexto
         context = {'latest_posts': posts[:6]}
 
@@ -59,11 +61,3 @@ class NewPostView(LoginRequiredMixin, View):
         context = {'form': form}
         return render(request, 'posts/new.html', context)
 
-
-class BlogDetailView(ListView):
-    template_name = 'posts/blogdetail.html'
-
-    def get_queryset(self):
-        queryset = Post.objects.select_related('owner').filter(owner=pk)
-
-        return queryset

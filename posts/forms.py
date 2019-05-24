@@ -7,12 +7,9 @@ class PostForm(ModelForm):
 
     url = forms.CharField(required=False)
 
-
-
-
     class Meta:
         model = Post
 
-        fields = ['title', 'description', 'url', 'text', 'categories' ]
+        fields = ['title', 'description', 'url', 'text', 'categories', 'publication_date' ]
 
 
