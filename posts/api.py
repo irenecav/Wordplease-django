@@ -1,3 +1,4 @@
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
@@ -10,6 +11,11 @@ from posts.views import PostList
 class PostsAPI(PostList, ListCreateAPIView):
 
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['title', 'description', 'url', 'owner__first_name', 'owner__last_name', 'text']
+    ordering_fields = ['id', 'publication_date', 'modification_date', 'title']
+
 
     queryset = Post.objects.all()
 

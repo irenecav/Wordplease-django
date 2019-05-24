@@ -44,9 +44,6 @@ urlpatterns = [
     path('api/users/', UsersAPI.as_view(), name='users_api'),
     path('api/users/<int:pk>/', UserDetailAPI.as_view(), name='user_detail'),
     path('api/posts/<int:pk>/', PostDetailAPI.as_view(), name='post_detail_Api'),
-    path('api/posts/', PostsAPI.as_view(), name='posts_api')
-
-
-
+    path('api/posts/', PostsAPI.as_view(), name='posts_api'),
 
 ]
