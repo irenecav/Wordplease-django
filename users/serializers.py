@@ -1,11 +1,20 @@
 from django.contrib.auth.models import User
+from django.urls import reverse
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-
+from rest_framework.fields import SerializerMethodField
 
 
 class BlogListSerializer(serializers.Serializer):
     username = serializers.CharField()
+    url = SerializerMethodField()
+
+    def get_url(self, obj):
+        return reverse('blogs_api') + str(obj.username)
+
+    class Meta:
+        model = User
+        fields = [ 'username', 'url']
 
 
 
