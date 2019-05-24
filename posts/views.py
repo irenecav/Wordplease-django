@@ -61,3 +61,18 @@ class NewPostView(LoginRequiredMixin, View):
         context = {'form': form}
         return render(request, 'posts/new.html', context)
 
+
+
+
+
+class PostList(object):
+
+    def get_queryset(self):
+        queryset = Post.objects.select_related('owner').order_by('-publication_date')
+        if not self.request.user.is_authenticated:
+            queryset = queryset.filter(publication_date__lte=datetime.datetime.now())
+        elif not self.request.user.is_superuser:
+            queryset = queryset.filter(Q(publication_date__lte=datetime.datetime.now()) | Q(owner=self.request.user))
+        return queryset
+
+

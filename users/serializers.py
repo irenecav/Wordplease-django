@@ -24,9 +24,9 @@ class WriteUserSerializer(UserSerializer):
     password = serializers.CharField()
     confirm_password = serializers.CharField()
 
+
     def validate_username(self, value):
-        has_to_check_username = self.instance is not None and self.instance.username != value
-        if has_to_check_username and User.objects.filter(username=value).exists():
+        if User.objects.filter(username=value).exists():
             raise ValidationError('The username {0} is already used'.format(value))
         return value
 
@@ -36,6 +36,7 @@ class WriteUserSerializer(UserSerializer):
         if password != confirm_password:
             raise ValidationError('Passwords do not match')
         return attrs
+
 
     def create(self, validated_data):
         user = User()
@@ -49,3 +50,4 @@ class WriteUserSerializer(UserSerializer):
         instance.email = validated_data.get('email')
         instance.save()
         return instance
+
