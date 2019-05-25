@@ -18,4 +18,4 @@ class PostSerializer(ModelSerializer):
         fields = ['id', 'title', 'url', 'description', 'text', 'publication_date', 'owner',
                   'categories' ]
 
-        read_only_fields = ['id', 'modification_date']
+        read_only_fields = ['id', 'owner', 'modification_date']

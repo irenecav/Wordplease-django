@@ -32,7 +32,7 @@ urlpatterns = [
     # Blogs
     path('blogs/', BlogListView.as_view(), name='blogs'),
     path('blogs/<str:username>/', BlogView.as_view(), name='user_blog'),
-    path('blogs/<str:username>/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
+    path('blogs/<str:username>/<int:pk>', PostDetailView.as_view(), name='post_detail'),
 
 
     # Posts
@@ -43,8 +43,9 @@ urlpatterns = [
 
     # API
     path('api/users/', UsersAPI.as_view(), name='users_api'),
-    path('api/users/<int:pk>/', UserDetailAPI.as_view(), name='user_detail'),
-    path('api/posts/<int:pk>/', PostDetailAPI.as_view(), name='post_detail_api'),
+    path('api/users/<int:pk>', UserDetailAPI.as_view(), name='user_detail'),
+    path('api/posts/<int:pk>', PostDetailAPI.as_view(), name='post_detail_api'),
+
     path('api/posts/', PostsAPI.as_view(), name='posts_api'),
     path('api/blogs/', BlogsAPI.as_view(), name='blogs_api'),
     path('api/blogs/<str:username>', UserBlogAPI.as_view(), name='user_blog_api')

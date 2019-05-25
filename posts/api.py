@@ -26,8 +26,6 @@ class PostsAPI(PostList, ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-
-
 class PostDetailAPI(RetrieveUpdateDestroyAPIView):
 
     permission_classes = [PostPermission]
@@ -36,4 +34,7 @@ class PostDetailAPI(RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
 
     def perform_update(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
